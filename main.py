@@ -15,11 +15,11 @@ def set_price():
     price = response["USD"]
     buy_price = price["buy"]
     if bestWeek(buy_price):
-        bot.send_message(88171378,f"بهترین قیمت در 7 روز اخیر : {buy_price}")
-        bot.send_message(-1001341117324,f"بهترین قیمت در 7 روز اخیر : {buy_price}")
+        bot.send_message(88171378,f"Best Price on 7 Days Ago: {buy_price}")
+        bot.send_message(-1001341117324,f"Best Price on 7 Days Ago: {buy_price}")
     if bestMonth(buy_price):
-        bot.send_message(88171378,f"بهترین قیمت در 30  روز اخیر : {buy_price}")
-        bot.send_message(-1001341117324,f"بهترین قیمت در 30  روز اخیر : {buy_price}")
+        bot.send_message(88171378,f"Best Price on 30 Days Ago: {buy_price}")
+        bot.send_message(-1001341117324,f"Best Price on 30 Days Ago: {buy_price}")
 
     insert(price["buy"],price["sell"])
 
