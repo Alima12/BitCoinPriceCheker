@@ -42,6 +42,50 @@ def bestMonth(buy):
         return True
     return False
 
+def bestThree(buy):
+    time = datetime.now() - timedelta(3)
+    time = time.strftime("%y/%m/%d %H:%M:%S")
+    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy < {buy}; """
+    res = cursor.execute(q)
+    for item in res:
+        count = item[0]
+    if count == 0:
+        return True
+    return False
+
+def MostWeek(buy):
+    time = datetime.now() - timedelta(7)
+    time = time.strftime("%y/%m/%d %H:%M:%S")
+    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy > {buy}; """
+    res = cursor.execute(q)
+    for item in res:
+        count = item[0]
+    if count == 0:
+        return True
+    return False
+
+def MostMonth(buy):
+    time = datetime.now() - timedelta(30)
+    time = time.strftime("%y/%m/%d %H:%M:%S")
+    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy > {buy}; """
+    res = cursor.execute(q)
+    for item in res:
+        count = item[0]
+    if count == 0:
+        return True
+    return False
+
+def MostThree(buy):
+    time = datetime.now() - timedelta(3)
+    time = time.strftime("%y/%m/%d %H:%M:%S")
+    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy > {buy}; """
+    res = cursor.execute(q)
+    for item in res:
+        count = item[0]
+    if count == 0:
+        return True
+    return False
+
 create()
 
 
