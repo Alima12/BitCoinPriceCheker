@@ -19,20 +19,23 @@ def set_price():
     response = response.json()
     price = response["USD"]
     buy_price = price["buy"]
+    message = []
     if bestThree(buy_price):
-        send_notif(f"کمترین قیمت در 3 روز گذشته : {buy_price}")
+        message.append(f"کمترین قیمت در 3 روز گذشته : {buy_price}")
     if bestWeek(buy_price):
-        send_notif(f"کمترین قیمت در  7 روز گذشته : {buy_price}")
+        message.append(f"کمترین قیمت در  7 روز گذشته : {buy_price}")
     if bestMonth(buy_price):
-        send_notif(f"کمترین قیمت در  30 روز گذشته : {buy_price}")
-
+        message.append(f"کمترین قیمت در  30 روز گذشته : {buy_price}")
     if MostThree(buy_price):
-        send_notif(f"بیشترین قیمت در 3 روز گذشته : {buy_price}")
+        message.append(f"بیشترین قیمت در 3 روز گذشته : {buy_price}")
     if MostWeek(buy_price):
-        send_notif(f"بیشترین قیمت در  7 روز گذشته : {buy_price}")
+        message.append(f"بیشترین قیمت در  7 روز گذشته : {buy_price}")
     if MostMonth(buy_price):
-        send_notif(f"بیشترین قیمت در  30 روز گذشته : {buy_price}")
+        message.append(f"بیشترین قیمت در  30 روز گذشته : {buy_price}")
 
+    if len(message) > 0:
+        msg = '\n'.join(message)
+        send_notif(msg)
     insert(price["buy"],price["sell"])
 
 
