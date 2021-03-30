@@ -1,6 +1,6 @@
 import requests as req
 import sqlite3
-from connectToDb import insert,bestWeek,bestMonth,bestThree,MostMonth,MostWeek,MostThree
+from connectToDb import insert,bestWeek,bestMonth,bestThree,MostMonth,MostWeek,MostThree,min_max_today,min_max_yesterday
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
@@ -12,6 +12,16 @@ bot = updater.bot
 def send_notif(message):
     bot.send_message(88171378,message)
     bot.send_message(-1001341117324,message)
+
+
+
+
+def more_detail():
+    min_t,max_t = min_max_today()
+    min_y,max_y = min_max_yesterday()
+    text = f"\n\n 🏵🎗بیشتر🎗🏵\n\n🥇کمترین قیمت امروز => {min_t}\n🥈بیشترین قیمت امروز=> {max_t}\n\n🥇بیشترین قیمت دیروز=> {min_y}\n🥈کمترین  قیمت دیروز => {max_y} \n\n\n"
+    return text
+
 
 def set_price():
     url = "https://blockchain.info/ticker"
@@ -35,14 +45,23 @@ def set_price():
     if MostMonth(buy_price):
         message.append(f"🔔 بیشترین قیمت در  30 روز گذشته")
 
-    if len(message) > 1:
-        __time = datetime.now().strftime("%H:%M:%S")
-        message.append(__time)
-        msg = '\n'.join(message)
-        send_notif(msg)
+
+
+
     insert(price["buy"],price["sell"])
 
 
 
+    if len(message) > 1:
+        more = more_detail()
+        message.append(more)
+        __time = datetime.now().strftime("%H:%M:%S")
+        message.append(__time)
+        msg = '\n'.join(message)
+        send_notif(msg)
+
+
+
 if __name__ == "__main__":
+
     set_price()

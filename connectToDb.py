@@ -86,6 +86,25 @@ def MostThree(buy):
         return True
     return False
 
+
+def min_max_today():
+    time = datetime.now()
+    begin = time.strftime("%y/%m/%d 00:00:00")
+    end =  time.strftime("%y/%m/%d 23:59:59")
+    q= f"SELECT min(buy),max(buy) FROM Prices WHERE '{begin}'  <= sec AND sec <= '{end}';"
+    res = cursor.execute(q)
+    for row in res:
+        return row
+
+def min_max_yesterday():
+    time = datetime.now() - timedelta(1)
+    begin = time.strftime("%y/%m/%d 00:00:00")
+    end =  time.strftime("%y/%m/%d 23:59:59")
+    q= f"SELECT min(buy),max(buy) FROM Prices WHERE '{begin}'  <= sec AND sec <= '{end}';"
+    res = cursor.execute(q)
+    for row in res:
+        return row
 create()
+
 
 
