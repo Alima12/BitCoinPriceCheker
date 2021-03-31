@@ -1,6 +1,6 @@
 import requests as req
 import sqlite3
-from connectToDb import insert,bestWeek,bestMonth,bestThree,MostMonth,MostWeek,MostThree,min_max_today,min_max_yesterday
+from connectToDb import insert,bestWeek,bestMonth,bestThree,MostMonth,MostWeek,MostThree,min_max_today,min_max_yesterday,growth
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
@@ -13,6 +13,30 @@ def send_notif(message):
     bot.send_message(88171378,message)
     bot.send_message(-1001341117324,message)
 
+
+def get_growth(price):
+    days = [0,3,7,30]
+    text = "\n\n⚡️میزان رشد:\n\n"
+    def change_form(dif):
+        dif = str(dif)
+        if '-' in dif:
+            dif = dif.replace('-','')
+            dif = dif + '➖ '
+        else:
+            dif = dif +  "➕ " 
+
+        return dif
+
+    for day in days:
+        dif = growth(day,price)
+        if day == 0:
+            dif = change_form(dif)
+            t= f"☀️ امروز => %{dif}\n"
+        else:
+            dif = change_form(dif)
+            t= f"📊 از {day} روز پیش => %{dif}\n"
+        text += t
+    return text
 
 
 
@@ -55,6 +79,8 @@ def set_price():
     if len(message) > 1:
         more = more_detail()
         message.append(more)
+        gro = get_growth(buy_price)
+        message.append(gro)
         __time = datetime.now().strftime("%H:%M:%S")
         message.append(__time)
         msg = '\n'.join(message)
@@ -63,5 +89,4 @@ def set_price():
 
 
 if __name__ == "__main__":
-
     set_price()

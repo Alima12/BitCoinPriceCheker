@@ -104,6 +104,21 @@ def min_max_yesterday():
     res = cursor.execute(q)
     for row in res:
         return row
+
+
+def growth(day,price):
+    time = datetime.now() - timedelta(day)
+    begin = time.strftime("%y/%m/%d 00:00:00")
+    end =  time.strftime("%y/%m/%d 23:59:59")
+    print(end,begin)
+    q= f"SELECT buy FROM Prices Where sec < '{end}' and sec >  '{begin}' ORDER BY sec  LIMIT 1;"
+    res = cursor.execute(q)
+    for row in res:
+        past = row[0]
+    dif = (price - past) / past * 100
+    dif = round(dif,2)
+    return dif
+
 create()
 
 
