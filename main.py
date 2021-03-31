@@ -1,6 +1,6 @@
 import requests as req
 import sqlite3
-from connectToDb import insert,bestWeek,bestMonth,bestThree,MostMonth,MostWeek,MostThree,min_max_today,min_max_yesterday,growth
+from connectToDb import insert,min_max_today,min_max_yesterday,growth,Most,Least
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
@@ -12,6 +12,7 @@ bot = updater.bot
 def send_notif(message):
     bot.send_message(88171378,message)
     bot.send_message(-1001341117324,message)
+    bot.send_message(1074680699,message)
 
 
 def get_growth(price):
@@ -56,17 +57,17 @@ def set_price():
     message = []
     title = f"📌قیمت کنونی بیتکوین=>   {buy_price} دلار \n"
     message.append(title)
-    if bestThree(buy_price):
+    if Least(buy_price,3):
         message.append(f"🔔 کمترین قیمت در 3 روز گذشته")
-    if bestWeek(buy_price):
+    if Least(buy_price,7):
         message.append(f"🔔 کمترین قیمت در  7 روز گذشته")
-    if bestMonth(buy_price):
+    if Least(buy_price,30):
         message.append(f"🔔 کمترین قیمت در  30 روز گذشته")
-    if MostThree(buy_price):
+    if Most(buy_price,3):
         message.append(f"🔔 بیشترین قیمت در 3 روز گذشته")
-    if MostWeek(buy_price):
+    if Most(buy_price,7):
         message.append(f"🔔 بیشترین قیمت در  7 روز گذشته")
-    if MostMonth(buy_price):
+    if Most(buy_price,30):
         message.append(f"🔔 بیشترین قیمت در  30 روز گذشته")
 
 

@@ -20,10 +20,10 @@ def insert(buy,sell):
     connect.commit()
 
 
-def bestWeek(buy):
-    time = datetime.now() - timedelta(7)
+def Least(buy,day):
+    time = datetime.now() - timedelta(day)
     time = time.strftime("%y/%m/%d %H:%M:%S")
-    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy < {buy}; """
+    q = f"""SELECT count(*) FROM Prices where sec >= "{time}" and buy < {buy}; """
     res = cursor.execute(q)
     for item in res:
         count = item[0]
@@ -31,54 +31,12 @@ def bestWeek(buy):
         return True
     return False
 
-def bestMonth(buy):
-    time = datetime.now() - timedelta(30)
-    time = time.strftime("%y/%m/%d %H:%M:%S")
-    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy < {buy}; """
-    res = cursor.execute(q)
-    for item in res:
-        count = item[0]
-    if count == 0:
-        return True
-    return False
 
-def bestThree(buy):
-    time = datetime.now() - timedelta(3)
-    time = time.strftime("%y/%m/%d %H:%M:%S")
-    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy < {buy}; """
-    res = cursor.execute(q)
-    for item in res:
-        count = item[0]
-    if count == 0:
-        return True
-    return False
 
-def MostWeek(buy):
-    time = datetime.now() - timedelta(7)
+def Most(buy,day):
+    time = datetime.now() - timedelta(day)
     time = time.strftime("%y/%m/%d %H:%M:%S")
-    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy > {buy}; """
-    res = cursor.execute(q)
-    for item in res:
-        count = item[0]
-    if count == 0:
-        return True
-    return False
-
-def MostMonth(buy):
-    time = datetime.now() - timedelta(30)
-    time = time.strftime("%y/%m/%d %H:%M:%S")
-    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy > {buy}; """
-    res = cursor.execute(q)
-    for item in res:
-        count = item[0]
-    if count == 0:
-        return True
-    return False
-
-def MostThree(buy):
-    time = datetime.now() - timedelta(3)
-    time = time.strftime("%y/%m/%d %H:%M:%S")
-    q = f"""SELECT count(*) FROM Prices where sec > "{time}" and buy > {buy}; """
+    q = f"""SELECT count(*) FROM Prices where sec >= "{time}" and buy > {buy}; """
     res = cursor.execute(q)
     for item in res:
         count = item[0]
@@ -110,13 +68,16 @@ def growth(day,price):
     time = datetime.now() - timedelta(day)
     begin = time.strftime("%y/%m/%d 00:00:00")
     end =  time.strftime("%y/%m/%d 23:59:59")
-    print(end,begin)
     q= f"SELECT buy FROM Prices Where sec < '{end}' and sec >  '{begin}' ORDER BY sec  LIMIT 1;"
     res = cursor.execute(q)
+    past = 0
     for row in res:
         past = row[0]
-    dif = (price - past) / past * 100
-    dif = round(dif,2)
+    if past > 0:
+        dif = (price - past) / past * 100
+        dif = round(dif,2)
+    else:
+        dif = 0
     return dif
 
 create()
