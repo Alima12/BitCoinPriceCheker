@@ -13,7 +13,7 @@ bot = updater.bot
 def send_notif(message):
     datas = data()
     draw_chart(datas)
-    message = "تغییرات قیمت در 6 ساعت اخیر \n\n" + message
+    message = "🌪تغییرات قیمت در 6 ساعت اخیر🔥 \n\n" + message
     with open('chart.jpg','rb') as file:
         bot.send_photo(88171378,photo=file,caption=message)
         bot.send_photo(-1001341117324,photo=file,caption=message)
