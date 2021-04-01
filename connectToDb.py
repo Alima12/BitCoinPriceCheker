@@ -80,6 +80,20 @@ def growth(day,price):
         dif = 0
     return dif
 
+
+def data():
+    time = datetime.now() - timedelta(hours=6)
+    time = time.strftime("%y/%m/%d %H:%M:%S")
+    q = f"""SELECT buy FROM Prices where sec >= "{time}"; """
+    res = cursor.execute(q)
+    data_chart= []
+    for item in res:
+        print(item)
+    
+    return data_chart
+    
+
+
 create()
 
 
