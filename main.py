@@ -57,20 +57,12 @@ def set_price():
     message = []
     title = f"📌قیمت کنونی بیتکوین=>   {buy_price} دلار \n"
     message.append(title)
-    if Least(buy_price,3):
-        message.append(f"🔔 کمترین قیمت در 3 روز گذشته")
-    if Least(buy_price,7):
-        message.append(f"🔔 کمترین قیمت در  7 روز گذشته")
-    if Least(buy_price,30):
-        message.append(f"🔔 کمترین قیمت در  30 روز گذشته")
-    if Most(buy_price,3):
-        message.append(f"🔔 بیشترین قیمت در 3 روز گذشته")
-    if Most(buy_price,7):
-        message.append(f"🔔 بیشترین قیمت در  7 روز گذشته")
-    if Most(buy_price,30):
-        message.append(f"🔔 بیشترین قیمت در  30 روز گذشته")
 
-
+    for day in [3,7,30]:
+        if Most(buy_price,day):
+            message.append(f"🔔 بیشترین قیمت در  {day} روز گذشته")
+        if Least(buy_price,day):
+            message.append(f"🔔 کمترین قیمت در {day} روز گذشته")
 
 
     insert(price["buy"],price["sell"])
