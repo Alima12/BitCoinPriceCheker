@@ -88,13 +88,13 @@ def data():
     res = cursor.execute(q)
     data_chart= []
     for item in res:
-        print(item)
-    
+        data_chart.append(item[0]/ 1000.0)
     return data_chart
     
 
 
 create()
+# data()
 
 
 
