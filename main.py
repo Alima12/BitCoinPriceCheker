@@ -14,7 +14,7 @@ bot = updater.bot
 
 
 #این متود برای ارسال اعلان استفاده میشه
-def send_notif(message):
+def send_notif(message:str):
     # گرفتن دیتا برای کشیدن نمودار ۶ ساعت اخیر
     datas = data()
 
@@ -41,12 +41,12 @@ def send_notif(message):
  را میگیره و با قیمت کنونی مقایسه میکند
  و درصد رشد را محسابه میکند
 """
-def get_growth(price):
+def get_growth(price:int) -> str:
     days = [0,3,7,30]
     text = "\n\n⚡️میزان رشد:\n\n"
 
     #فقط متن ارسالی را زیبا میکنه
-    def change_form(dif):
+    def change_form(dif:str) ->str:
         dif = str(dif)
         if '-' in dif:
             dif = dif.replace('-','')
@@ -70,7 +70,7 @@ def get_growth(price):
 
 
 #  بیشترین و کمترین قیمت امروز و دیروز را برمیگرداند
-def more_detail():
+def more_detail() ->str:
     #بیشترین و کمترین قیمت امروز
     min_t,max_t = min_max_today()
     #بیشترین و کمترین قیمت دیروز
