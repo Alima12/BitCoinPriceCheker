@@ -1,8 +1,8 @@
 from ImageCharts import ImageCharts
 import random
 
-
-def draw_chart(data):
+#یک لیست را دریافت میکند و نمودار آن را میکشد
+def draw_chart(data:list)->str:
     items = [str(i) for i in data]
     random.shuffle(items)
     items_str = ",".join(items)
