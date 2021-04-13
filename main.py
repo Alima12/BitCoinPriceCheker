@@ -16,19 +16,26 @@ bot = updater.bot
 #این متود برای ارسال اعلان استفاده میشه
 def send_notif(message:str):
     # گرفتن دیتا برای کشیدن نمودار ۶ ساعت اخیر
-    datas = data()
+    try:
+        datas = data()
 
-    #عملیات کشیدن نمودار و ذخیره عکس
-    # عکس رو با اسم chart.jpg توی روت زخیره میکنه
-    draw_chart(datas)
-    message = "🌪تغییرات قیمت در 6 ساعت اخیر🔥 \n\n" + message
+        #عملیات کشیدن نمودار و ذخیره عکس
+        # عکس رو با اسم chart.jpg توی روت زخیره میکنه
+        draw_chart(datas)
+        message = "🌪تغییرات قیمت در 6 ساعت اخیر🔥 \n\n" + message
 
-    #باز کردن عکس نمودار برای ارسال 
-    #ارسال عکس به کاربران انتخابی
-    with open('chart.jpg','rb') as file:
-        bot.send_photo(88171378,photo=file,caption=message)
-        bot.send_photo(-1001341117324,photo=file,caption=message)
-        bot.send_photo(1074680699,photo=file,caption=message)
+        #باز کردن عکس نمودار برای ارسال 
+        #ارسال عکس به کاربران انتخابی
+        with open('chart.jpg','rb') as file:
+            bot.send_photo(88171378,photo=file,caption=message)
+            bot.send_photo(-1001341117324,photo=file,caption=message)
+            bot.send_photo(1074680699,photo=file,caption=message)
+    except:
+        for user in [88171378,-1001341117324,1074680699]:
+            bot.send_message(user,message)
+    
+
+
 
 
 #این متود درصد رشد بیت کوین رو محاسبه میکند در بازه های زمانی مختلف
